@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { fetchAttempts, type Attempt } from '../api/attempts'
+import { formatScore } from '../utils/format'
 
 const attempts = ref<Attempt[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
-
-const percentFormat = new Intl.NumberFormat('zh-CN', {
-  style: 'percent',
-  maximumFractionDigits: 1,
-})
 
 const dateFormat = new Intl.DateTimeFormat('zh-CN', {
   year: 'numeric',
@@ -19,10 +15,6 @@ const dateFormat = new Intl.DateTimeFormat('zh-CN', {
   minute: '2-digit',
   hour12: false,
 })
-
-function formatScore(score: number): string {
-  return percentFormat.format(score)
-}
 
 function formatTime(iso: string): string {
   const date = new Date(iso)
@@ -46,7 +38,10 @@ onMounted(load)
 
 <template>
   <section class="card">
-    <h2>默写记录</h2>
+    <div class="card-header">
+      <h2>默写记录</h2>
+      <RouterLink class="btn-primary" :to="{ name: 'texts' }">默写</RouterLink>
+    </div>
 
     <p v-if="loading" class="state">加载中…</p>
 
@@ -79,39 +74,16 @@ onMounted(load)
 </template>
 
 <style scoped>
-.card {
-  background: #fff;
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 16px 20px;
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
 h2 {
-  margin: 0 0 12px;
-  font-size: 18px;
-}
-
-.state {
   margin: 0;
-  padding: 24px 0;
-  text-align: center;
-  color: #656d76;
-}
-
-.state-error {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  color: #cf222e;
-}
-
-.state-error button {
-  padding: 4px 12px;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  background: #f6f8fa;
-  cursor: pointer;
+  font-size: 18px;
 }
 
 .attempts {

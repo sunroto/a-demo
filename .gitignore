@@ -33,21 +33,6 @@ yarn-error.log*
 .memory/
 *.local.json
 
-# Java / Spring Boot
-.gradle/
-build/
-out/
-target/
-*.class
-*.ear
-*.jar
-*.war
-
-# Keep wrapper binaries/config in VCS
-!gradle/wrapper/gradle-wrapper.jar
-!mvnw
-!mvnw.cmd
-
 # Frontend / Node.js
 .cache/
 .eslintcache
@@ -57,7 +42,12 @@ coverage/
 dist/
 node_modules/
 *.tsbuildinfo
-package-lock.json
+
+# SQLite (seed.sql under server/data/ is committed; only DB files are ignored)
+server/data/*.db
+server/data/*.db-journal
+server/data/*.db-wal
+server/data/*.db-shm
 
 # Playwright
 **/.playwright/
@@ -83,12 +73,9 @@ docs/review/
 docs/superpowers/
 
 # Local workspace metadata
-AGENTS.md
 CLAUDE.md
 
 # Local config file
 .mcp.json
-/server/skillhub-app/src/main/resources/static/
 /web/enpm-lock.yaml
-/server/skillhub-app/src/main/resources/application-local.yml
 
